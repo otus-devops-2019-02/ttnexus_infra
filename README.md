@@ -61,4 +61,33 @@ gcloud compute firewall-rules create puma-server \
   --direction INGRESS
 ```
 
+## Домашнее задание №8
+
+### Самостоятельные задания
+1. Переменная private_key_path определена по аналогии с остальными переменными из задания
+2. По аналогии с прошлыми определена переменная zone, в variables.tf определено для нее значение по умолчанию
+3. terraform fmt отработала нормально, без ошибок
+4. Файл создал, скопировал туда значения по умолчанию
+
+### Задание со *
+Добавить ключ ко всему проекту можно так:
+```
+resource "google_compute_project_metadata" "ssh_keys" {
+  metadata {
+    ssh-keys = "appuser:${file(var.public_key_path)}"
+  }
+}
+```
+
+Если требуется внести несколько ключей для нескольких пользователей, то синтаксисом допускается вот такое:
+```
+sshKeys = "${var.ssh_user}:${var.ssh_key} \n${var.ssh_user1}:${var.ssh_key1}"
+```
+При добавлении ключа в gcp вручную после terraform apply ключ добавленный вручную был удален, так как он не входит в список ключей, описанных в тераформе
+
+### Задание с **
+Создал пул resource "google_compute_target_pool" "reddit-app" состоящий из 2х экземпляров нашего образа
+Добавил проверку состояния на 9292 порту resource "google_compute_http_health_check" "reddit-healthcheck"
+Добавил правило переадресации resource "google_compute_forwarding_rule" "reddit-pool"
+Очень удобно было делать через self_link
 

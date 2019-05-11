@@ -22,30 +22,30 @@ resource "google_compute_instance" "app" {
     ssh-keys = "appuser:${file(var.public_key_path)}"
   }
 
-  connection {
-    type        = "ssh"
-    user        = "appuser"
-    agent       = "false"
-    private_key = "${file(var.private_key_path)}"
-  }
+#  connection {
+#    type        = "ssh"
+#    user        = "appuser"
+#    agent       = "false"
+#    private_key = "${file(var.private_key_path)}"
+#  }
 
-  provisioner "file" {
-     source      = "../modules/app/files/puma.service"
-     destination = "/tmp/puma.service"
-   }
+#  provisioner "file" {
+#     source      = "../modules/app/files/puma.service"
+#     destination = "/tmp/puma.service"
+#   }
 
-   provisioner "file" {
-     source      = "../modules/app/files/deploy.sh"
-     destination = "/tmp/deploy.sh"
-   }
+#   provisioner "file" {
+#     source      = "../modules/app/files/deploy.sh"
+#     destination = "/tmp/deploy.sh"
+#   }
 
-   provisioner "remote-exec" {
-     inline = [
-       "chmod +x /tmp/deploy.sh",
-       "DBIP=${var.db_ip_addr} /tmp/deploy.sh",
-     ]
-   }
-}
+#   provisioner "remote-exec" {
+#     inline = [
+#       "chmod +x /tmp/deploy.sh",
+#       "DBIP=${var.db_ip_addr} /tmp/deploy.sh",
+#     ]
+#   }
+#}
 
 resource "google_compute_address" "app_ip" {
   name = "reddit-app-ip"

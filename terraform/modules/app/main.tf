@@ -45,7 +45,7 @@ resource "google_compute_instance" "app" {
 #       "DBIP=${var.db_ip_addr} /tmp/deploy.sh",
 #     ]
 #   }
-#}
+}
 
 resource "google_compute_address" "app_ip" {
   name = "reddit-app-ip"
@@ -58,7 +58,7 @@ resource "google_compute_firewall" "firewall_puma" {
   allow {
     protocol = "tcp"
 
-    ports = ["9292"]
+    ports = ["9292","80"]
   }
 
   source_ranges = ["0.0.0.0/0"]

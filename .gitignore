@@ -3,5 +3,11 @@ packer/variables.json
 *.tfstate.*.backup
 *.tfstate.backup
 *.tfvars
+*.log
 .terraform/
+*.retry
+jdauphant.nginx
+vault.key
+jdauphant.nginx
+./ansible/roles/jdauphant.nginx
 
